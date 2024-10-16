@@ -1,0 +1,16 @@
+* Usage:
+import them library, them do
+```
+hiplot.plot1(DIRNAME, NAME, YTITLENAME, DATA)
+```
+where
+ - DIRNAME is a string to specify where the output figure is stored
+ - NAME is the name string for the generated figure
+ - YTITLENAME is the name string for the y-title in the generated figure
+ - DATA is a python dict object. The x-tick of the figure is extracted
+   from the dict-keys
+
+* Note
+Take a look at the do_plot1 function in plot.py. There are other stuff
+that can be reconfigured. But each of them has a default so it is OK
+to leave them along (until necessary).
