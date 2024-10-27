@@ -98,7 +98,10 @@ class hiplot:
                         iname="",
                         legendon=False,
                         legendloc=None,
-                        gridlinestyle='-'):
+                        gridlinestyle='-',
+                        yoffset=1.0,
+                        lncol=1,
+                        lfont=10):
         ax.yaxis.grid(True)
         ax.yaxis.grid(color='lightgrey',
                       linestyle=gridlinestyle,
@@ -165,14 +168,17 @@ class hiplot:
                 labels[::-1],
                 loc=legendloc,
                 # bbox_to_anchor=(0.5, 1.4, 0, 0),
-                ncol=4, #TODO This is ad-hoc by far
-                edgecolor='black')
+                ncol=lncol,
+                edgecolor='black',
+                fontsize=lfont)
 
         if xtickon == True:
             ax.set_xticks(xticks)
             ax.set_xlim(.5, ly + .5)
             if xinnertickon:
-                ax.set_xticklabels(x, rotation=90)
+                ax.set_xticklabels(x,
+                                   fontsize=lfont,
+                                   rotation=90)
                 # first level x-ticklabel position
                 ypos = -bar
             else:
@@ -193,13 +199,14 @@ class hiplot:
                             if sn in label:
                                 label = label.replace(sn, self.SN[sn])
                                 break
-                    lxpos = (pos + .5 * rpos) * scale
-                    ax.text(lxpos, ypos, label, ha='center',
+                    lxpos = (pos + .5 * rpos) * scale # horizontal shift
+                    # space between cat label and sub-cat label
+                    ax.text(lxpos, ypos-yoffset, label, ha='center',
                             transform=ax.transAxes)
                     self.add_line(ax, pos * scale, -bar*0.8, bar*0.8)
                     pos += rpos
                 self.add_line(ax, pos * scale, ypos, bar)
-                ypos -= .2 # space between cat label and sub-cat label
+                ypos -= 0.5
         else:
             ax.set_xticks(xticks)
             ax.set_xticklabels([])
@@ -233,22 +240,25 @@ class hiplot:
     def do_plot1(self,
                  dir_name, name, y_title,
                  data,
-                 percentage = False,
-                 stack = False,
-                 xtickon = True,
-                 xinnertickon = True,
-                 edgecolor = None,
-                 legendon = False,
-                 legendloc = None,
-                 width = 30,
-                 height = 2,
-                 bar = 0.3,
-                 start = 0,
-                 end = 1.0,
-                 step = 0.1,
-                 ytitlesize = 12,
-                 yticksize = 12,
-                 gridlinestyle = '--'):
+                 percentage    = False,
+                 stack         = False,
+                 xtickon       = True,
+                 xinnertickon  = True,
+                 edgecolor     = None,
+                 legendon      = False,
+                 legendloc     = None,
+                 width         = 30,
+                 height        = 2,
+                 bar           = 0.3,
+                 start         = 0,
+                 end           = 1.0,
+                 step          = 0.1,
+                 ytitlesize    = 12,
+                 yticksize     = 12,
+                 gridlinestyle = '--',
+                 yoffset       = 1.0,
+                 lncol         = 1,
+                 lfont         = 10):
         isExist = os.path.exists(dir_name)
         if not isExist:
             os.makedirs(dir_name)
@@ -266,7 +276,10 @@ class hiplot:
                              edgecolor=edgecolor,
                              legendon=legendon,
                              legendloc=legendloc,
-                             gridlinestyle=gridlinestyle)
+                             gridlinestyle=gridlinestyle,
+                             yoffset=yoffset,
+                             lncol=lncol,
+                             lfont=lfont)
         fig.subplots_adjust(bottom=0.3)
         ax.set_ylabel(y_title, fontsize=ytitlesize)
         if (xinnertickon == False) or (xtickon == False):
