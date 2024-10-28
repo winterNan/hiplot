@@ -1,3 +1,20 @@
+# Filename: plotCPU.py
+# Description:
+# Author: Yuan Yao <yuan.yao@it.uu.se>
+# Maintainer:
+# Created: Sun Oct 27 10:53:28 2024 (+0100)
+# Version:
+# Package-Requires: ()
+# Last-Updated:
+#           By:
+#     Update #: 0
+# URL:
+# Doc URL:
+# Keywords:
+# Compatibility:
+#
+#
+
 import os
 import matplotlib.pyplot as plt
 import hashlib
@@ -98,6 +115,7 @@ class hiplot:
                         iname="",
                         legendon=False,
                         legendloc=None,
+                        legendbox=None,
                         gridlinestyle='-',
                         yoffset=1.0,
                         lncol=1,
@@ -167,7 +185,7 @@ class hiplot:
                 handles[::-1],
                 labels[::-1],
                 loc=legendloc,
-                # bbox_to_anchor=(0.5, 1.4, 0, 0),
+                bbox_to_anchor=legendbox,
                 ncol=lncol,
                 edgecolor='black',
                 fontsize=lfont)
@@ -247,6 +265,7 @@ class hiplot:
                  edgecolor     = None,
                  legendon      = False,
                  legendloc     = None,
+                 legendbox     = None,
                  width         = 30,
                  height        = 2,
                  bar           = 0.3,
@@ -276,6 +295,7 @@ class hiplot:
                              edgecolor=edgecolor,
                              legendon=legendon,
                              legendloc=legendloc,
+                             legendbox=legendbox,
                              gridlinestyle=gridlinestyle,
                              yoffset=yoffset,
                              lncol=lncol,
