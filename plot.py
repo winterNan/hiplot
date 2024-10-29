@@ -146,13 +146,14 @@ class hiplot:
                         cmap.append(self.color[int(e) % len(self.color)])
 
                 ax.bar(xticks, y, align='center',
-                       color = cmap,
+                       color=cmap,
                        edgecolor=edgecolor,
                        zorder=3)
 
             elif style == "line":
                 ax.plot(xticks, y, zorder=3,
-                        label=iname, color=COLOR[iname],
+                        label=iname,
+                        color=COLOR[iname],
                         linewidth=3)
             else:
                 sys.exit()
@@ -256,7 +257,9 @@ class hiplot:
         )
 
     def do_plot1(self,
-                 dir_name, name, y_title,
+                 dir_name,
+                 name,
+                 y_title,
                  data,
                  percentage    = False,
                  stack         = False,
