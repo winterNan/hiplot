@@ -133,18 +133,18 @@ class hiplot:
             ly = len(y)
             xticks = range(1, ly + 1)
 
-            if style == "bar":
-                if self.color is None:
-                    cmap = [self._wc(item) for item in x]
-                else:
-                    cmap = []
-                    for e in x:
-                        # TODO what if _ is a string
-                        if e == "seperator":
-                            cmap.append('white')
-                            continue
-                        cmap.append(self.color[int(e) % len(self.color)])
+            if self.color is None:
+                cmap = [self._wc(item) for item in x]
+            else:
+                cmap = []
+                for i,e in enumerate(x):
+                    # TODO what if _ is a string
+                    if e == "seperator":
+                        cmap.append('white')
+                        continue
+                    cmap.append(self.color[i % len(self.color)])
 
+            if style == "bar":
                 ax.bar(xticks, y, align='center',
                        color=cmap,
                        edgecolor=edgecolor,
@@ -153,7 +153,7 @@ class hiplot:
             elif style == "line":
                 ax.plot(xticks, y, zorder=3,
                         label=iname,
-                        color=COLOR[iname],
+                        color=cmap,
                         linewidth=3)
             else:
                 sys.exit()
@@ -181,6 +181,7 @@ class hiplot:
                 bot = [x+y for x,y in zip(bot, y)]
 
         if legendon == True:
+
             handles, labels = ax.get_legend_handles_labels()
             ax.legend(
                 handles[::-1],
@@ -261,6 +262,7 @@ class hiplot:
                  name,
                  y_title,
                  data,
+                 style         = "bar",
                  percentage    = False,
                  stack         = False,
                  xtickon       = True,
@@ -296,6 +298,7 @@ class hiplot:
                              xinnertickon,
                              stack,
                              edgecolor=edgecolor,
+                             style=style,
                              legendon=legendon,
                              legendloc=legendloc,
                              legendbox=legendbox,
