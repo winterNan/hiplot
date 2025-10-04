@@ -22,7 +22,8 @@ from matplotlib.backends.backend_pdf import PdfPages
 import json
 import numpy as np
 from colorama import Fore, Back, Style
-plt.rc('font', size=9)
+from matplotlib.ticker import MultipleLocator
+plt.rc('font', size=10)
 
 
 class bcolors:
@@ -158,13 +159,7 @@ class hiplot:
             else:
                 sys.exit()
         else:
-            if 'xticks' not in locals():
-                xticks = []
-            #reakpoint()
             for i,item in enumerate(list(data.keys())):
-                if not data[item]:
-                    print(f"{item} not found in data")
-                    continue
                 groups = self.mk_groups(data[item])
                 xy = groups.pop()
                 x, y = zip(*xy)
@@ -172,7 +167,6 @@ class hiplot:
                 if item == list(data.keys())[0]:
                     bot = [0] * ly
                 xticks = range(1, ly + 1)
-                type(xticks)
 
                 if self.color is None:
                     cmap = self._wc(item)
@@ -200,11 +194,6 @@ class hiplot:
                 fontsize=lfont)
 
         if xtickon == True:
-            # groups = self.mk_groups(data)
-            # xy = groups.pop()
-            # x, y = zip(*xy)
-
-            ly = len(y)
             ax.set_xticks(xticks)
             ax.set_xlim(.5, ly + .5)
             if xinnertickon:
@@ -233,8 +222,7 @@ class hiplot:
                                 break
                     lxpos = (pos + .5 * rpos) * scale # horizontal shift
                     # space between cat label and sub-cat label
-                    # application names
-                    ax.text(lxpos, ypos-yoffset, label, ha='center',rotation=0,
+                    ax.text(lxpos, ypos-yoffset, label, ha='center',
                             transform=ax.transAxes)
                     self.add_line(ax, pos * scale, -bar*0.8, bar*0.8)
                     pos += rpos
@@ -275,6 +263,7 @@ class hiplot:
                  name,
                  y_title,
                  data,
+                 global_max,
                  style         = "bar",
                  percentage    = False,
                  stack         = False,
@@ -330,6 +319,12 @@ class hiplot:
             ax.set_yticklabels([str(int(x*100)) + '%' \
                                for x in np.arange(start, end*1.1, step)],
                                fontsize=yticksize)
+        else:
+            #global_max = max(v for series in data.values() for v in series.values())
+            global_max += (global_max/10)
+            
+            ax.set_ylim(0, global_max)
+
 
         plt.savefig(pp, format='pdf', bbox_inches='tight')
         pp.close()
