@@ -22,7 +22,6 @@ from matplotlib.backends.backend_pdf import PdfPages
 import json
 import numpy as np
 from colorama import Fore, Back, Style
-#from matplotlib.ticker import MultipleLocator
 plt.rc('font', size=10)
 
 
