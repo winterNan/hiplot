@@ -22,7 +22,7 @@ from matplotlib.backends.backend_pdf import PdfPages
 import json
 import numpy as np
 from colorama import Fore, Back, Style
-from matplotlib.ticker import MultipleLocator
+#from matplotlib.ticker import MultipleLocator
 plt.rc('font', size=10)
 
 
@@ -263,7 +263,6 @@ class hiplot:
                  name,
                  y_title,
                  data,
-                 global_max,
                  style         = "bar",
                  percentage    = False,
                  stack         = False,
@@ -284,7 +283,8 @@ class hiplot:
                  gridlinestyle = '--',
                  yoffset       = 1.0,
                  lncol         = 1,
-                 lfont         = 10):
+                 lfont         = 10,
+                 global_max=0):
         isExist = os.path.exists(dir_name)
         if not isExist:
             os.makedirs(dir_name)
@@ -319,8 +319,7 @@ class hiplot:
             ax.set_yticklabels([str(int(x*100)) + '%' \
                                for x in np.arange(start, end*1.1, step)],
                                fontsize=yticksize)
-        else:
-            #global_max = max(v for series in data.values() for v in series.values())
+        elif global_max > 0:
             global_max += (global_max/10)
             
             ax.set_ylim(0, global_max)
